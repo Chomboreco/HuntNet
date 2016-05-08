@@ -7,5 +7,8 @@
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/HuntNet_DB?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">root</property>
+    <mapping class="com.huntnet.entity.Dispositivo"/>
+    <mapping class="com.huntnet.entity.Device"/>
+    <mapping class="com.huntnet.entity.Administrador"/>
   </session-factory>
 </hibernate-configuration>
