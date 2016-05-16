@@ -4,8 +4,6 @@ package com.huntnet.entity;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -18,7 +16,6 @@ import javax.persistence.TemporalType;
 @Table(name = "dispositivo", catalog = "huntnet_db")
 public class Dispositivo implements java.io.Serializable {
 
-    private Integer idDispositivo;
     private String ip;
     private String comunidad;
     private Date addedDate;
@@ -33,18 +30,7 @@ public class Dispositivo implements java.io.Serializable {
     }
 
     @Id
-    @GeneratedValue(strategy = IDENTITY)
-
-    @Column(name = "idDispositivo", unique = true, nullable = false)
-    public Integer getIdDispositivo() {
-        return this.idDispositivo;
-    }
-
-    public void setIdDispositivo(Integer idDispositivo) {
-        this.idDispositivo = idDispositivo;
-    }
-
-    @Column(name = "ip", nullable = false, length = 15)
+    @Column(name = "ip", unique = true, nullable = false, length = 15)
     public String getIp() {
         return this.ip;
     }

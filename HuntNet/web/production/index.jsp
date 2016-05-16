@@ -64,7 +64,7 @@
                                         <ul class="nav child_menu">
                                             <li><a href="nuevoDispositivo.jsp">Agregar dispositivo</a>
                                             </li>
-                                            <li><a href="form_advanced.html">Lista completa</a>
+                                            <li><a href="listaDispositivos.jsp">Lista completa</a>
                                             </li>
                                             <li><a href="form_validation.html">Buscar</a>
                                             </li>

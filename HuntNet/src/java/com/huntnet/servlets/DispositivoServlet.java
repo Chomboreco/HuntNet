@@ -6,10 +6,13 @@
 package com.huntnet.servlets;
 
 import com.huntnet.daos.DispositivoDAO;
+import com.huntnet.entity.Device;
 import com.huntnet.entity.Dispositivo;
+import com.huntnet.managers.DeviceManager;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -50,6 +53,11 @@ public class DispositivoServlet extends HttpServlet {
                 case "nuevo":
                     nuevo(request, response);
                     break;
+
+                case "lista":
+                    lista(request, response);
+                    break;
+
                 default:
                     response.sendRedirect("nuevoDispositivo.jsp");
             }
@@ -123,5 +131,35 @@ public class DispositivoServlet extends HttpServlet {
         }
 
         request.getRequestDispatcher("nuevoDispositivo.jsp").forward(request, response);
+    }
+
+    private void lista(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        DispositivoDAO dao = new DispositivoDAO();
+        ArrayList<Dispositivo> dispositivos = dao.readAll();
+
+        ArrayList<Device> devices = new ArrayList<>();
+
+        for (Dispositivo dispositivo : dispositivos) {
+            DeviceManager dm = new DeviceManager(dispositivo.getIp(), dispositivo.getComunidad());
+            Device device = dm.getDevice();
+
+            if (device != null) {
+                device.setAddedDate(dispositivo.getAddedDate());
+                device.setCommunity(dispositivo.getComunidad());
+
+                devices.add(device);
+            }
+
+        }
+        if (dispositivos.size() < 1) {
+            request.setAttribute("dispositivos", null);
+        }
+        else {
+            System.out.println("Size:" + devices.size());
+            request.setAttribute("dispositivos", devices);
+        }
+
+        request.getRequestDispatcher("listaDispositivos.jsp").forward(request, response);
     }
 }

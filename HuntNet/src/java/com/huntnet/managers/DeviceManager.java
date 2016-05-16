@@ -18,9 +18,14 @@ import org.snmp4j.smi.OID;
 public class DeviceManager {
 
     SNMPManager client;
+    String ip;
+    String community;
+    String descryptor;
 
-    public DeviceManager(String ip) {
-        client = new SNMPManager("udp:" + ip + "/161");
+    public DeviceManager(String ip, String community) {
+        this.ip = ip;
+        this.community = community;
+        client = new SNMPManager("udp:" + ip + "/161", this.community);
     }
 
     public Device getDevice() {
@@ -28,12 +33,33 @@ public class DeviceManager {
 
         try {
             client.start();
-            String descryptor = client.getAsString(new OID("1.3.6.1.2.1.1.1.0"));
+
+            descryptor = client.getAsString(new OID("1.3.6.1.2.1.1.1.0"));
             
-            device.setOs(this.getOs(descryptor));
-            device.setProcessorManufacturer(this.getProcessorManufacturer(descryptor));
-            device.setArchitecture(this.getArchitecture(descryptor));
-            device.setProcessorModel(this.getProcessorModel(descryptor));
+            System.out.println("Descriptor: " + descryptor);
+
+            if (descryptor != null) {
+
+                String name = client.getAsString(new OID("1.3.6.1.2.1.1.5.0"));
+                String sysp = client.getAsString(new OID("1.3.6.1.2.1.1.3.0"));
+                String interfaceNum = client.getAsString(new OID("1.3.6.1.2.1.2.1.0"));
+
+                device.setProcessorModel(this.getProcessorModel(descryptor));
+                device.setProcessorManufacturer(this.getProcessorManufacturer(descryptor));
+                device.setArchitecture(this.getArchitecture(descryptor));
+
+                device.setOs(this.getOs(descryptor));
+                device.setVersion(this.getVersion(descryptor));
+
+                device.setIp(this.ip);
+                device.setCommunity(this.community);
+                device.setName(name);
+                device.setSystemUpTime(sysp);
+                device.setInterfacesNum(Integer.parseInt(interfaceNum));
+            }
+            else {
+                return null;
+            }
         }
         catch (IOException ex) {
             Logger.getLogger(DeviceManager.class.getName()).log(Level.SEVERE, null, ex);
@@ -55,7 +81,7 @@ public class DeviceManager {
             return "Otro";
         }
     }
-    
+
     private String getProcessorManufacturer(String s) {
         if (s.contains("Intel")) {
             return "Intel";
@@ -67,7 +93,7 @@ public class DeviceManager {
             return "Otro";
         }
     }
-    
+
     private String getArchitecture(String s) {
         if (s.contains("x64") || s.contains("64")) {
             return "x64";
@@ -79,16 +105,41 @@ public class DeviceManager {
             return "Otro";
         }
     }
-    
+
     private String getProcessorModel(String s) {
-        String[] s1 = s.split("Model");
-        String[] s2 = s1[1].split(" ");
-        
-        if (s2[1].isEmpty()) {
+        String[] s1;
+        String s2;
+
+        if (s.isEmpty()) {
+            return "Sin información";
+        }
+        else {
+            s1 = s.split("Model");
+            //s2 = s1[1].split(" ");
+            s2 = "Sin modelo";
+        }
+        if (s2.isEmpty()) {
             return "sin modelo";
         }
         else {
-            return s2[1];
+            return s2;
         }
+    }
+
+    private String getVersion(String s) {
+//        String[] s1 = s.split("Version");
+//        String[] s2 = s1[1].split(" ");
+//
+//        if (s2[1].isEmpty()) {
+//            return "sin version";
+//        }
+//        else {
+//            return s2[1];
+//        }
+        return "sin versión";
+    }
+    
+    public String getDescriptor(){
+        return this.descryptor;
     }
 }

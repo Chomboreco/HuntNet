@@ -20,19 +20,19 @@ public class Device {
 
     // OS
     String os; //--
-    String version;
+    String version; //--
 
     // User info
-    String ip;
-    String community;
-    String name;
+    String ip; //--
+    String community; //--
+    String name; //--
 
     // Metadata
-    Date addedDate;
-    String systemUpTime;
+    Date addedDate; //--
+    String systemUpTime; //--
 
     // Interfaces
-    int interfacesNum;
+    int interfacesNum; //-- 
 
     public Device() {
     }

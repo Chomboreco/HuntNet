@@ -28,14 +28,19 @@ public class SNMPManager {
 
     Snmp snmp = null;
     String address = null;
+    String community;
 
     /**
      * Constructor
      *
-     * @param add
+     * @param addres
+     * @param community
      */
-    public SNMPManager(String add) {
-        address = add;
+    public SNMPManager(String addres, String community) {
+        this.address = addres;
+        this.community = community;
+        
+        
     }
 
     /**
@@ -78,10 +83,14 @@ public class SNMPManager {
         }
         pdu.setType(PDU.GET);
         ResponseEvent event = snmp.send(pdu, getTarget(), null);
+        
+        
         if (event != null) {
             return event;
         }
-        throw new RuntimeException("GET timed out");
+        else {
+            return null;
+        }
     }
 
     /**
@@ -90,9 +99,9 @@ public class SNMPManager {
      * @return
      */
     private Target getTarget() {
-        Address targetAddress = GenericAddress.parse(address);
+        Address targetAddress = GenericAddress.parse(this.address);
         CommunityTarget target = new CommunityTarget();
-        target.setCommunity(new OctetString("Chomboreco"));
+        target.setCommunity(new OctetString(this.community));
         target.setAddress(targetAddress);
         target.setRetries(2);
         target.setTimeout(1500);
