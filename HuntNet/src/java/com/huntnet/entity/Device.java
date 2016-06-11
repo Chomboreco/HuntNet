@@ -34,6 +34,45 @@ public class Device {
     // Interfaces
     int interfacesNum; //-- 
 
+    // Sysdescriptor
+    String sysdescriptor;
+    String mac;
+    String udp;
+    String tcp;
+
+    public String getTcp() {
+        return tcp;
+    }
+
+    public void setTcp(String tcp) {
+        this.tcp = tcp;
+    }
+    
+
+    public String getUdp() {
+        return udp;
+    }
+
+    public void setUdp(String udp) {
+        this.udp = udp;
+    }
+
+    public String getMac() {
+        return mac;
+    }
+
+    public void setMac(String mac) {
+        this.mac = mac;
+    }
+
+    public String getSysdescriptor() {
+        return sysdescriptor;
+    }
+
+    public void setSysdescriptor(String sysdescriptor) {
+        this.sysdescriptor = sysdescriptor;
+    }
+
     public Device() {
     }
 

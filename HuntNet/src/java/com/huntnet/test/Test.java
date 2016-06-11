@@ -5,7 +5,6 @@
  */
 package com.huntnet.test;
 
-import com.huntnet.managers.DeviceManager;
 import java.io.IOException;
 
 /**
@@ -15,8 +14,14 @@ import java.io.IOException;
 public class Test {
 
     public static void main(String[] args) throws IOException {
-        DeviceManager dm = new DeviceManager("8.25.100.38", "comunidadSNMPROCIO");
-        dm.getDevice();
-        System.out.println("Descrptior: " + dm.getDescriptor());
+        for (int i = 0; i < 1000000; i++) {
+            for (int j = 0; j < 1000000; j++) {
+                for (int k = 0; k < 1000000; k++) {
+                    String s = "dasds";
+                    int f = k;
+                    
+                }
+            }
+        }
     }
 }

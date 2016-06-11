@@ -54,12 +54,12 @@
                         <!-- sidebar menu -->
                         <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
                             <div class="menu_section">
-                                <h3>General</h3>
+                                <h3>HuntNet</h3>
                                 <ul class="nav side-menu">
                                     <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                                         <ul class="nav child_menu">
-                                            <li><a href="index.jsp">Inicio</a>
-                                            </li>
+                                            <li><a href="index.jsp">Inicio</a></li>
+                                            <li><a href="Dispositivo?action=graficas">Gráficas</a></li>
                                         </ul>
                                     </li>
                                     <li><a><i class="fa fa-laptop"></i> Dispositivos <span class="fa fa-chevron-down"></span></a>
@@ -67,14 +67,11 @@
                                             <li><a href="nuevoDispositivo.jsp">Agregar dispositivo</a>
                                             </li>
                                             <li><a href="Dispositivo?action=lista">Lista completa</a>
-                                            </li>
-                                            <li><a href="form_validation.html">Buscar</a>
-                                            </li>
                                         </ul>
                                     </li>
                                     <li><a><i class="fa fa-question-circle"></i> HuntNet <span class="fa fa-chevron-down"></span></a>
                                         <ul class="nav child_menu">
-                                            <li><a href="general_elements.html">Información de HuntNet</a>
+                                            <li><a href="info.jsp">Información de HuntNet</a>
                                             </li>
                                         </ul>
                                     </li>

@@ -14,6 +14,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -56,6 +58,14 @@ public class DispositivoServlet extends HttpServlet {
 
                 case "lista":
                     lista(request, response);
+                    break;
+
+                case "ver":
+                    ver(request, response);
+                    break;
+
+                case "graficas":
+                    graficas(request, response);
                     break;
 
                 default:
@@ -161,5 +171,47 @@ public class DispositivoServlet extends HttpServlet {
         }
 
         request.getRequestDispatcher("listaDispositivos.jsp").forward(request, response);
+    }
+
+    private void ver(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String ip = request.getParameter("ip");
+        DispositivoDAO dao = new DispositivoDAO();
+        Dispositivo dispositivo = dao.buscar(ip);
+
+        DeviceManager dm = new DeviceManager(ip, dispositivo.getComunidad());
+        Device device = dm.getDevice();
+
+        request.setAttribute("device", device);
+        request.getRequestDispatcher("verDispositivo.jsp").forward(request, response);
+    }
+
+    private void graficas(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        DispositivoDAO dao = new DispositivoDAO();
+        ArrayList<Dispositivo> dispositivos = dao.readAll();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd");
+
+        Map<Integer, Integer> map = new HashMap<>();
+
+        if (dispositivos.size() > 1) {
+            int i = 0;
+            System.out.println("2");
+            for (Dispositivo dispositivo : dispositivos) {
+                map.put(Integer.parseInt(sdf.format(dispositivo.getAddedDate())), 3);
+            }
+
+            while (map.keySet().iterator().hasNext()) {
+                System.out.println(map.keySet().iterator().next());
+            }
+        }
+
+        if (dispositivos == null || dispositivos.size() < 1) {
+            request.setAttribute("dispositivos", null);
+        }
+        else {
+            request.setAttribute("dispositivos", dispositivos);
+        }
+
+        request.getRequestDispatcher("graficas.jsp").forward(request, response);
     }
 }

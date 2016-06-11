@@ -35,14 +35,15 @@ public class DeviceManager {
             client.start();
 
             descryptor = client.getAsString(new OID("1.3.6.1.2.1.1.1.0"));
-            
-            System.out.println("Descriptor: " + descryptor);
 
             if (descryptor != null) {
 
                 String name = client.getAsString(new OID("1.3.6.1.2.1.1.5.0"));
                 String sysp = client.getAsString(new OID("1.3.6.1.2.1.1.3.0"));
                 String interfaceNum = client.getAsString(new OID("1.3.6.1.2.1.2.1.0"));
+                String mac = client.getAsString(new OID("1.3.6.1.2.1.5.1.0"));
+                String udp = client.getAsString(new OID("1.3.6.1.2.1.7.1.0"));
+                String tcp = client.getAsString(new OID("1.3.6.1.2.1.6.1.0"));
 
                 device.setProcessorModel(this.getProcessorModel(descryptor));
                 device.setProcessorManufacturer(this.getProcessorManufacturer(descryptor));
@@ -51,11 +52,16 @@ public class DeviceManager {
                 device.setOs(this.getOs(descryptor));
                 device.setVersion(this.getVersion(descryptor));
 
+                device.setSysdescriptor(descryptor);
+
                 device.setIp(this.ip);
                 device.setCommunity(this.community);
                 device.setName(name);
                 device.setSystemUpTime(sysp);
                 device.setInterfacesNum(Integer.parseInt(interfaceNum));
+                device.setMac(mac);
+                device.setUdp(udp);
+                device.setTcp(tcp);
             }
             else {
                 return null;
@@ -66,6 +72,12 @@ public class DeviceManager {
         }
 
         return device;
+    }
+
+    public String getOID(String oid) throws IOException {
+        client.start();
+        return client.getAsString(new OID(oid));
+        
     }
 
     private String getOs(String s) {
@@ -138,8 +150,8 @@ public class DeviceManager {
 //        }
         return "sin versión";
     }
-    
-    public String getDescriptor(){
+
+    public String getDescriptor() {
         return this.descryptor;
     }
 }

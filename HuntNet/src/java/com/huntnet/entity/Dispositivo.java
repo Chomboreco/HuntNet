@@ -19,6 +19,46 @@ public class Dispositivo implements java.io.Serializable {
     private String ip;
     private String comunidad;
     private Date addedDate;
+    private Integer tcp;
+    private Integer udp;
+    private Integer icmp;
+    private Integer cpu;
+
+    @Column(name = "tcp", nullable = true)
+    public Integer getTcp() {
+        return tcp;
+    }
+
+    public void setTcp(Integer tcp) {
+        this.tcp = tcp;
+    }
+
+    @Column(name = "udp", nullable = true)
+    public Integer getUdp() {
+        return udp;
+    }
+
+    public void setUdp(Integer udp) {
+        this.udp = udp;
+    }
+
+    @Column(name = "icmp", nullable = true)
+    public Integer getIcmp() {
+        return icmp;
+    }
+
+    public void setIcmp(Integer icmp) {
+        this.icmp = icmp;
+    }
+
+    @Column(name = "cpu", nullable = true)
+    public Integer getCpu() {
+        return cpu;
+    }
+
+    public void setCpu(Integer cpu) {
+        this.cpu = cpu;
+    }
 
     public Dispositivo() {
     }
